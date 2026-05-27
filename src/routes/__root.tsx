@@ -6,14 +6,10 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import SuperiorLimousineLoader from "@/components/loadingpage";
-
-import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
   return (
@@ -53,45 +49,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Superior Limousine LLC — Executive Transportation CRM" },
-      { name: "description", content: "Superior Limousine LLC Executive Transportation — admin CRM for managing clients, reservations, chauffeurs, and billing." },
-      { property: "og:title", content: "Superior Limousine LLC — Executive Transportation CRM" },
-      { name: "twitter:title", content: "Superior Limousine LLC — Executive Transportation CRM" },
-      { property: "og:description", content: "Superior Limousine LLC Executive Transportation — admin CRM for managing clients, reservations, chauffeurs, and billing." },
-      { name: "twitter:description", content: "Superior Limousine LLC Executive Transportation — admin CRM for managing clients, reservations, chauffeurs, and billing." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/30ed0db1-d60a-4f07-b521-e25121078ecf/id-preview-349cb232--7b650318-0b15-45fd-8cf7-83951b7b40af.lovable.app-1778593842846.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/30ed0db1-d60a-4f07-b521-e25121078ecf/id-preview-349cb232--7b650318-0b15-45fd-8cf7-83951b7b40af.lovable.app-1778593842846.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:type", content: "website" },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap",
-      },
-    ],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head><HeadContent /></head>
-      <body>{children}<Scripts /></body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
