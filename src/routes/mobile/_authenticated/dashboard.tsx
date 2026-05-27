@@ -54,6 +54,8 @@ function MobileDashboard() {
         revenue,
       });
       setRecent((rec.data as RecentBooking[]) ?? []);
+    }).catch(error => {
+      console.error("Dashboard data fetch failed:", error);
     });
   }, []);
 
