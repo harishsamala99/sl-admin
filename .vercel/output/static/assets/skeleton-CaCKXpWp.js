@@ -1,0 +1,1 @@
+import{b as t,a as o}from"./utils-rNmJmQHy.js";import{j as a}from"./index-B-DSza9I.js";const r=[["path",{d:"M16 7h6v6",key:"box55l"}],["path",{d:"m22 7-8.5 8.5-5-5L2 17",key:"1t1m79"}]],m=t("trending-up",r);function d({className:e,...n}){return a.jsx("div",{className:o("animate-pulse rounded-md bg-primary/10",e),...n})}export{d as S,m as T};
