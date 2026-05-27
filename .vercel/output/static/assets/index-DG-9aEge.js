@@ -1,1 +1,0 @@
-import{j as e,N as o}from"./index-B-DSza9I.js";const n=()=>typeof window<"u"&&window.innerWidth<768?e.jsx(o,{to:"/mobile/dashboard",replace:!0}):e.jsx(o,{to:"/dashboard",replace:!0});export{n as component};
