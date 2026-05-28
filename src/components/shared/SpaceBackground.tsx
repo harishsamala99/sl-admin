@@ -25,15 +25,15 @@ export default function SpaceBackground() {
     }
 
     const stars: Star[] = [];
-    const count = Math.min(100, Math.floor((W * H) / 12000)); // Cap the stars for premium performance
+    const count = Math.min(150, Math.floor((W * H) / 9000)); // slightly more stars for a richer field
 
     for (let i = 0; i < count; i++) {
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        size: Math.random() * 0.9 + 0.2,
-        alpha: Math.random(),
-        speed: 0.01 + Math.random() * 0.02,
+        size: Math.random() * 1.8 + 0.4, // larger, brighter stars
+        alpha: Math.random() * 0.7 + 0.3, // higher baseline opacity
+        speed: 0.005 + Math.random() * 0.015,
         twinkle: Math.random() * Math.PI * 2,
       });
     }
@@ -54,12 +54,30 @@ export default function SpaceBackground() {
       // Draw subtle twinkling stars
       stars.forEach((s) => {
         s.twinkle += s.speed;
-        const currentAlpha = Math.max(0.1, s.alpha * ((Math.sin(s.twinkle) + 1) / 2));
+        const currentAlpha = Math.max(0.15, s.alpha * ((Math.sin(s.twinkle) + 1) / 2));
         
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200, 168, 80, ${currentAlpha * 0.6})`;
+        // brighter stars are pure white/gold
+        ctx.fillStyle = s.size > 1.3 
+          ? `rgba(255, 235, 175, ${currentAlpha * 0.95})` 
+          : `rgba(220, 190, 110, ${currentAlpha * 0.75})`;
         ctx.fill();
+
+        // draw premium cross-flare sparkles for the brightest stars
+        if (s.size > 1.4) {
+          ctx.beginPath();
+          // horizontal flare
+          ctx.moveTo(s.x - s.size * 3.5, s.y);
+          ctx.lineTo(s.x + s.size * 3.5, s.y);
+          // vertical flare
+          ctx.moveTo(s.x, s.y - s.size * 3.5);
+          ctx.lineTo(s.x, s.y + s.size * 3.5);
+          
+          ctx.strokeStyle = `rgba(255, 240, 200, ${currentAlpha * 0.55})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
       });
 
       animId = requestAnimationFrame(draw);

@@ -191,11 +191,11 @@ function CustomerDetail() {
       <div className="flex items-center text-sm text-muted-foreground gap-2 mb-2">
         <Link
           to="/customers"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-gold"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-gold transition-colors font-medium"
         >
           <ArrowLeft className="h-4 w-4" /> Back to customers
         </Link>
-        <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+        <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-semibold">
           Superior Limousine LLC · Executive Transportation
         </div>
       </div>
@@ -204,8 +204,8 @@ function CustomerDetail() {
       <div className="luxury-card rounded-xl p-6 md:p-8">
         <div className="flex flex-wrap gap-6 items-start justify-between">
           <div className="space-y-3 min-w-0">
-            <div className="text-xs uppercase tracking-[0.3em] text-gold">Client Profile</div>
-            <h1 className="text-3xl md:text-4xl font-display">{customer.full_name}</h1>
+            <div className="text-xs uppercase tracking-[0.3em] text-gold font-semibold">Client Profile</div>
+            <h1 className="text-3xl md:text-4xl font-display font-medium text-foreground">{customer.full_name}</h1>
             <div className="flex gap-2 flex-wrap items-center">
               <Badge
                 variant="outline"
@@ -232,7 +232,7 @@ function CustomerDetail() {
                 setBookOpen(true);
               }}
               size="sm"
-              className="gradient-gold text-primary-foreground border-0"
+              className="gradient-gold text-primary-foreground border-0 shadow-sm"
             >
               <Plus className="h-4 w-4 mr-2" /> Create Reservation
             </Button>
@@ -456,7 +456,7 @@ function CustomerDetail() {
                 placeholder="Add a note about this customer…"
                 rows={2}
               />
-              <Button onClick={addNote} className="gradient-gold text-primary-foreground border-0">
+              <Button onClick={addNote} className="gradient-gold text-primary-foreground border-0 shadow-sm">
                 Add
               </Button>
             </div>
@@ -468,7 +468,7 @@ function CustomerDetail() {
                 <div key={n.id} className="flex gap-3 border-l-2 border-gold/40 pl-4 py-1">
                   <MessageSquare className="h-4 w-4 text-gold mt-1 shrink-0" />
                   <div className="flex-1">
-                    <div className="text-sm whitespace-pre-wrap">{n.body}</div>
+                    <div className="text-sm whitespace-pre-wrap text-foreground">{n.body}</div>
                     <div className="text-xs text-muted-foreground mt-1">
                       {formatDate(n.created_at)}{" "}
                       {new Date(n.created_at).toLocaleTimeString([], {
@@ -638,7 +638,7 @@ function BookingsTable({
               <td className="px-3 py-2">
                 <PayBadge status={b.payment_status} />
               </td>
-              <td className="px-3 py-2 text-right">${Number(b.amount).toFixed(2)}</td>
+              <td className="px-3 py-2 text-right font-semibold">${Number(b.amount).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

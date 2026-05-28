@@ -91,11 +91,11 @@ function CustomersPage() {
   }));
 
   return (
-    <div className="p-4 md:p-10 space-y-4 md:space-y-6 max-w-7xl mx-auto">
+    <div className="p-4 md:p-10 space-y-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-gold mb-2">Clients</div>
-          <h1 className="text-3xl md:text-4xl font-display">Customers</h1>
+          <div className="text-xs uppercase tracking-[0.3em] text-gold font-semibold mb-1">Clients</div>
+          <h1 className="text-3xl md:text-4xl font-display font-medium text-foreground">Customers</h1>
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button variant="outline" onClick={() => downloadCsv("customers.csv", exportRows)}>
@@ -109,7 +109,7 @@ function CustomersPage() {
               setEditing(null);
               setOpen(true);
             }}
-            className="gradient-gold text-primary-foreground border-0"
+            className="gradient-gold text-primary-foreground border-0 shadow-sm"
           >
             <Plus className="h-4 w-4 mr-2" /> New Customer
           </Button>
@@ -132,10 +132,10 @@ function CustomersPage() {
               key={t}
               onClick={() => setTagFilter(t)}
               className={
-                "px-3 py-1.5 text-xs rounded-md border transition-colors " +
+                "px-3 py-1.5 text-xs font-medium rounded-md border transition-colors " +
                 (tagFilter === t
                   ? "bg-gold-soft text-gold border-gold/40"
-                  : "border-border text-muted-foreground hover:text-foreground")
+                  : "border-border text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/50")
               }
             >
               {t}
@@ -144,83 +144,98 @@ function CustomersPage() {
         </div>
       </div>
 
-      <div className="luxury-card rounded-xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="text-xs uppercase tracking-wider text-muted-foreground border-b border-border bg-muted/30">
-              <tr>
-                <th className="text-left px-6 py-3">Name</th>
-                <th className="text-left px-6 py-3">Contact</th>
-                <th className="text-left px-6 py-3">Company</th>
-                <th className="text-left px-6 py-3">Tags</th>
-                <th className="text-right px-6 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading && (
-                <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
-                    Loading…
-                  </td>
-                </tr>
-              )}
-              {!loading && pageRows.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="px-6 py-16 text-center text-muted-foreground">
-                    No customers found. Try a different search or add one.
-                  </td>
-                </tr>
-              )}
-              {pageRows.map((c) => (
-                <tr key={c.id} className="border-b border-border/50 hover:bg-muted/30">
-                  <td className="px-6 py-3">
+      {/* Separate Cards Grid for Customers */}
+      {loading ? (
+        <div className="text-center py-16 text-muted-foreground luxury-card rounded-xl font-medium">
+          Loading customers…
+        </div>
+      ) : pageRows.length === 0 ? (
+        <div className="text-center py-16 text-muted-foreground luxury-card rounded-xl font-medium">
+          No customers found. Try a different search or add one.
+        </div>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {pageRows.map((c) => (
+            <div
+              key={c.id}
+              className="luxury-card rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:translate-y-[-4px]"
+            >
+              <div className="space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
                     <Link
                       to="/customers/$id"
                       params={{ id: c.id }}
-                      className="font-medium hover:text-gold transition-colors"
+                      className="font-display text-lg font-semibold text-foreground hover:text-gold transition-colors block truncate"
                     >
                       {c.full_name}
                     </Link>
-                  </td>
-                  <td className="px-6 py-3 text-muted-foreground">
-                    <div>{c.email ?? "—"}</div>
-                    <div className="text-xs">{c.phone ?? ""}</div>
-                  </td>
-                  <td className="px-6 py-3 text-muted-foreground">{c.company_name ?? "—"}</td>
-                  <td className="px-6 py-3">
-                    <div className="flex gap-1 flex-wrap">
-                      {(c.tags ?? []).map((t) => (
-                        <Badge
-                          key={t}
-                          variant="outline"
-                          className="bg-gold-soft text-gold border-gold/40"
-                        >
-                          {t}
-                        </Badge>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-6 py-3 text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => {
-                        setEditing(c);
-                        setOpen(true);
-                      }}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => setConfirmDel(c)}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <span className="text-[10px] font-semibold text-gold tracking-wider uppercase block mt-0.5 opacity-80">
+                      {c.company_name || "Personal Client"}
+                    </span>
+                  </div>
+                  <div className="flex gap-1 flex-wrap justify-end shrink-0">
+                    {(c.tags ?? []).map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold rounded bg-gold-soft text-gold border border-gold/25"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 text-xs text-muted-foreground border-t border-border/20 pt-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground/60 font-medium w-12">Email:</span>
+                    <span className="truncate font-medium text-foreground">{c.email ?? "—"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground/60 font-medium w-12">Phone:</span>
+                    <span className="font-medium text-foreground">{c.phone ?? "—"}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between border-t border-border/20 pt-4 mt-auto">
+                <Link
+                  to="/customers/$id"
+                  params={{ id: c.id }}
+                  className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-white transition-all"
+                >
+                  View Profile →
+                </Link>
+                <div className="flex gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-gold hover:bg-sidebar-accent/50 rounded-lg"
+                    onClick={() => {
+                      setEditing(c);
+                      setOpen(true);
+                    }}
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-rose-400 hover:bg-rose-500/10 rounded-lg"
+                    onClick={() => setConfirmDel(c)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="flex items-center justify-between px-6 py-3 border-t border-border text-sm text-muted-foreground">
+      )}
+
+      {/* Pagination panel */}
+      {!loading && filtered.length > 0 && (
+        <div className="flex items-center justify-between px-6 py-4 luxury-card rounded-xl text-sm text-muted-foreground">
           <div>
             {filtered.length} customer{filtered.length === 1 ? "" : "s"}
           </div>
@@ -233,7 +248,7 @@ function CustomersPage() {
             >
               Prev
             </Button>
-            <span>
+            <span className="text-foreground font-medium">
               Page {page + 1} / {pageCount}
             </span>
             <Button
@@ -246,7 +261,7 @@ function CustomersPage() {
             </Button>
           </div>
         </div>
-      </div>
+      )}
 
       <CustomerForm open={open} onOpenChange={setOpen} initial={editing} onSaved={load} />
 
