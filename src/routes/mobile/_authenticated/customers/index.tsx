@@ -8,8 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CustomerForm } from "@/components/shared/CustomerForm";
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -30,12 +36,17 @@ function MobileCustomersPage() {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from("customers").select("*").order("created_at", { ascending: false });
+    const { data, error } = await supabase
+      .from("customers")
+      .select("*")
+      .order("created_at", { ascending: false });
     if (error) toast.error(error.message);
     setCustomers(data ?? []);
     setLoading(false);
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -63,7 +74,14 @@ function MobileCustomersPage() {
         <div>
           <h1 className="text-2xl font-display font-semibold">Customers</h1>
         </div>
-        <Button size="icon" className="h-10 w-10 rounded-full gradient-gold" onClick={() => { setEditing(null); setOpen(true); }}>
+        <Button
+          size="icon"
+          className="h-10 w-10 rounded-full gradient-gold"
+          onClick={() => {
+            setEditing(null);
+            setOpen(true);
+          }}
+        >
           <Plus className="h-5 w-5 text-primary-foreground" />
         </Button>
       </header>
@@ -77,7 +95,7 @@ function MobileCustomersPage() {
           className="pl-10 h-12 bg-card border-border/50 rounded-xl"
         />
       </div>
-      
+
       <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar -mx-4 px-4 snap-x">
         {["all", "VIP", "Corporate", "Frequent"].map((t) => (
           <button
@@ -89,7 +107,9 @@ function MobileCustomersPage() {
                 ? "bg-gold-soft text-gold border-gold/40"
                 : "bg-card border-border text-muted-foreground hover:text-foreground")
             }
-          >{t}</button>
+          >
+            {t}
+          </button>
         ))}
       </div>
 
@@ -105,16 +125,29 @@ function MobileCustomersPage() {
           </div>
         )}
         {filtered.map((c) => (
-          <div key={c.id} className="bg-card border border-border/50 p-4 rounded-xl shadow-sm space-y-3">
+          <div
+            key={c.id}
+            className="bg-card border border-border/50 p-4 rounded-xl shadow-sm space-y-3"
+          >
             <div className="flex justify-between items-start">
               <div>
-                <Link to="/mobile/customers/$id" params={{ id: c.id }} className="font-semibold text-lg hover:text-gold transition-colors">
+                <Link
+                  to="/mobile/customers/$id"
+                  params={{ id: c.id }}
+                  className="font-semibold text-lg hover:text-gold transition-colors"
+                >
                   {c.full_name}
                 </Link>
-                {(c.tags && c.tags.length > 0) && (
+                {c.tags && c.tags.length > 0 && (
                   <div className="flex gap-1.5 flex-wrap mt-1.5">
                     {c.tags.map((t) => (
-                      <Badge key={t} variant="outline" className="bg-gold-soft text-gold border-gold/40 text-[10px] py-0">{t}</Badge>
+                      <Badge
+                        key={t}
+                        variant="outline"
+                        className="bg-gold-soft text-gold border-gold/40 text-[10px] py-0"
+                      >
+                        {t}
+                      </Badge>
                     ))}
                   </div>
                 )}
@@ -143,12 +176,31 @@ function MobileCustomersPage() {
             </div>
 
             <div className="flex items-center justify-between pt-2 border-t border-border/40 mt-3">
-              <Link to="/mobile/customers/$id" params={{ id: c.id }} className="text-sm text-gold font-medium">View details</Link>
+              <Link
+                to="/mobile/customers/$id"
+                params={{ id: c.id }}
+                className="text-sm text-gold font-medium"
+              >
+                View details
+              </Link>
               <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={() => { setEditing(c); setOpen(true); }}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 rounded-full"
+                  onClick={() => {
+                    setEditing(c);
+                    setOpen(true);
+                  }}
+                >
                   <Pencil className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-destructive" onClick={() => setConfirmDel(c)}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 rounded-full text-destructive"
+                  onClick={() => setConfirmDel(c)}
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -169,7 +221,12 @@ function MobileCustomersPage() {
           </AlertDialogHeader>
           <AlertDialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
             <AlertDialogCancel className="w-full mt-0">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground w-full">Delete</AlertDialogAction>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground w-full"
+            >
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

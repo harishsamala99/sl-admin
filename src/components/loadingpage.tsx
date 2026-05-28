@@ -31,7 +31,7 @@ export default function SuperiorLimousineLoader() {
     canvas.width = W;
     canvas.height = H;
 
-    let stars: Star[] = [];
+    const stars: Star[] = [];
     let meteors: Meteor[] = [];
     let t = 0;
     let animId: number;
@@ -163,145 +163,185 @@ export default function SuperiorLimousineLoader() {
       <div style={{ position: "relative", zIndex: 10, textAlign: "center" }}>
         {/* Logo ring */}
         <div style={{ position: "relative", width: 110, height: 110, margin: "0 auto 28px" }}>
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "50%",
-            border: "1px solid rgba(200,168,0,0.3)",
-            animationName: "ringPulse",
-            animationDuration: "2s",
-            animationTimingFunction: "ease-in-out",
-            animationIterationCount: "infinite",
-          }} />
-          <div style={{
-            position: "absolute",
-            inset: 8,
-            borderRadius: "50%",
-            border: "1.5px solid transparent",
-            borderTopColor: "#c8a800",
-            animationName: "spinCW",
-            animationDuration: "4s",
-            animationTimingFunction: "linear",
-            animationIterationCount: "infinite",
-          }} />
-          <div style={{
-            position: "absolute",
-            inset: 18,
-            borderRadius: "50%",
-            border: "1px solid transparent",
-            borderRightColor: "#c8a800",
-            animationName: "spinCCW",
-            animationDuration: "6s",
-            animationTimingFunction: "linear",
-            animationIterationCount: "infinite",
-          }} />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              border: "1px solid rgba(200,168,0,0.3)",
+              animationName: "ringPulse",
+              animationDuration: "2s",
+              animationTimingFunction: "ease-in-out",
+              animationIterationCount: "infinite",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 8,
+              borderRadius: "50%",
+              border: "1.5px solid transparent",
+              borderTopColor: "#c8a800",
+              animationName: "spinCW",
+              animationDuration: "4s",
+              animationTimingFunction: "linear",
+              animationIterationCount: "infinite",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 18,
+              borderRadius: "50%",
+              border: "1px solid transparent",
+              borderRightColor: "#c8a800",
+              animationName: "spinCCW",
+              animationDuration: "6s",
+              animationTimingFunction: "linear",
+              animationIterationCount: "infinite",
+            }}
+          />
         </div>
 
-        <div style={{
-          fontFamily: "Georgia, serif",
-          fontSize: "clamp(32px, 6vw, 54px)",
-          fontWeight: 700,
-          letterSpacing: "0.22em",
-          color: "#fff",
-          textTransform: "uppercase",
-          animationName: "fadeSlideUp",
-          animationDuration: "1.2s",
-          animationTimingFunction: "ease-out",
-          animationFillMode: "forwards",
-          opacity: 0,
-        }}>
+        <div
+          style={{
+            fontFamily: "Georgia, serif",
+            fontSize: "clamp(32px, 6vw, 54px)",
+            fontWeight: 700,
+            letterSpacing: "0.22em",
+            color: "#fff",
+            textTransform: "uppercase",
+            animationName: "fadeSlideUp",
+            animationDuration: "1.2s",
+            animationTimingFunction: "ease-out",
+            animationFillMode: "forwards",
+            opacity: 0,
+          }}
+        >
           Superior
         </div>
 
-        <div style={{
-          fontFamily: "Georgia, serif",
-          fontSize: "clamp(18px, 4vw, 32px)",
-          fontWeight: 300,
-          letterSpacing: "0.45em",
-          color: "#c8a800",
-          textTransform: "uppercase",
-          marginTop: 6,
-          animationName: "fadeSlideUp",
-          animationDuration: "1.6s",
-          animationTimingFunction: "ease-out",
-          animationFillMode: "forwards",
-          opacity: 0,
-        }}>
+        <div
+          style={{
+            fontFamily: "Georgia, serif",
+            fontSize: "clamp(18px, 4vw, 32px)",
+            fontWeight: 300,
+            letterSpacing: "0.45em",
+            color: "#c8a800",
+            textTransform: "uppercase",
+            marginTop: 6,
+            animationName: "fadeSlideUp",
+            animationDuration: "1.6s",
+            animationTimingFunction: "ease-out",
+            animationFillMode: "forwards",
+            opacity: 0,
+          }}
+        >
           Limousine LLC
         </div>
 
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 16,
-          margin: "18px 0 12px",
-          animationName: "fadeIn",
-          animationDuration: "2.2s",
-          animationTimingFunction: "ease",
-          animationFillMode: "forwards",
-          opacity: 0,
-        }}>
-          <div style={{ width: 70, height: 1, background: "linear-gradient(to right, transparent, #c8a800)" }} />
-          <span style={{ color: "#a89060", fontSize: 11, letterSpacing: "0.5em", textTransform: "uppercase", fontFamily: "sans-serif" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 16,
+            margin: "18px 0 12px",
+            animationName: "fadeIn",
+            animationDuration: "2.2s",
+            animationTimingFunction: "ease",
+            animationFillMode: "forwards",
+            opacity: 0,
+          }}
+        >
+          <div
+            style={{
+              width: 70,
+              height: 1,
+              background: "linear-gradient(to right, transparent, #c8a800)",
+            }}
+          />
+          <span
+            style={{
+              color: "#a89060",
+              fontSize: 11,
+              letterSpacing: "0.5em",
+              textTransform: "uppercase",
+              fontFamily: "sans-serif",
+            }}
+          >
             Executive Transportation
           </span>
-          <div style={{ width: 70, height: 1, background: "linear-gradient(to left, transparent, #c8a800)" }} />
+          <div
+            style={{
+              width: 70,
+              height: 1,
+              background: "linear-gradient(to left, transparent, #c8a800)",
+            }}
+          />
         </div>
 
-        <div style={{
-          color: "#6a5a38",
-          fontSize: 12,
-          letterSpacing: "0.35em",
-          textTransform: "uppercase",
-          fontFamily: "sans-serif",
-          animationName: "fadeIn",
-          animationDuration: "2.8s",
-          animationTimingFunction: "ease",
-          animationFillMode: "forwards",
-          opacity: 0,
-          marginBottom: 26,
-        }}>
+        <div
+          style={{
+            color: "#6a5a38",
+            fontSize: 12,
+            letterSpacing: "0.35em",
+            textTransform: "uppercase",
+            fontFamily: "sans-serif",
+            animationName: "fadeIn",
+            animationDuration: "2.8s",
+            animationTimingFunction: "ease",
+            animationFillMode: "forwards",
+            opacity: 0,
+            marginBottom: 26,
+          }}
+        >
           Elegance &bull; Comfort &bull; Prestige
         </div>
 
-        <div style={{
-          width: 320,
-          height: 2,
-          margin: "0 auto",
-          background: "rgba(200,168,0,0.1)",
-          borderRadius: 99,
-          overflow: "hidden",
-          animationName: "fadeIn",
-          animationDuration: "2s",
-          animationTimingFunction: "ease",
-          animationFillMode: "forwards",
-          opacity: 0,
-        }}>
-          <div style={{
-            height: "100%",
-            width: "30%",
-            background: "linear-gradient(to right, #6a4e00, #c8a800, #ffe066)",
+        <div
+          style={{
+            width: 320,
+            height: 2,
+            margin: "0 auto",
+            background: "rgba(200,168,0,0.1)",
             borderRadius: 99,
-            animationName: "barSlide",
-            animationDuration: "2.2s",
-            animationTimingFunction: "ease-in-out",
-            animationIterationCount: "infinite",
-          }} />
+            overflow: "hidden",
+            animationName: "fadeIn",
+            animationDuration: "2s",
+            animationTimingFunction: "ease",
+            animationFillMode: "forwards",
+            opacity: 0,
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: "30%",
+              background: "linear-gradient(to right, #6a4e00, #c8a800, #ffe066)",
+              borderRadius: 99,
+              animationName: "barSlide",
+              animationDuration: "2.2s",
+              animationTimingFunction: "ease-in-out",
+              animationIterationCount: "infinite",
+            }}
+          />
         </div>
 
-        <div style={{
-          marginTop: 12,
-          fontSize: 10,
-          letterSpacing: "0.55em",
-          color: "#4a3e22",
-          textTransform: "uppercase",
-          fontFamily: "sans-serif",
-          animationName: "blink",
-          animationDuration: "2s",
-          animationTimingFunction: "ease-in-out",
-          animationIterationCount: "infinite",
-        }}>
+        <div
+          style={{
+            marginTop: 12,
+            fontSize: 10,
+            letterSpacing: "0.55em",
+            color: "#4a3e22",
+            textTransform: "uppercase",
+            fontFamily: "sans-serif",
+            animationName: "blink",
+            animationDuration: "2s",
+            animationTimingFunction: "ease-in-out",
+            animationIterationCount: "infinite",
+          }}
+        >
           Arriving in style&hellip;
         </div>
       </div>

@@ -1,12 +1,7 @@
 import * as React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-} from "@tanstack/react-router";
+import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import SuperiorLimousineLoader from "@/components/loadingpage";
@@ -38,7 +33,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <h1 className="text-xl font-semibold">Something went wrong</h1>
         <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
         <button
-          onClick={() => { router.invalidate(); reset(); }}
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
           className="mt-6 inline-flex items-center justify-center rounded-md gradient-gold px-4 py-2 text-sm font-medium text-primary-foreground"
         >
           Try again
@@ -61,7 +59,7 @@ function RootComponent() {
 
   React.useEffect(() => {
     const path = window.location.pathname;
-    
+
     // Bulletproof redirect logic to prevent infinite redirect loops on mobile refresh
     if (path === "/" || path === "/mobile" || path === "/mobile/") {
       if (isMobile && !path.startsWith("/mobile")) {

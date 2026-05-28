@@ -8,7 +8,11 @@ export function RideBadge({ status }: { status: string }) {
     completed: "border-emerald-500/40 text-emerald-300 bg-emerald-500/10",
     cancelled: "border-rose-500/40 text-rose-300 bg-rose-500/10",
   };
-  return <Badge variant="outline" className={cn("capitalize", map[status])}>{status}</Badge>;
+  return (
+    <Badge variant="outline" className={cn("capitalize", map[status])}>
+      {status}
+    </Badge>
+  );
 }
 
 export function PayBadge({ status }: { status: string }) {
@@ -18,5 +22,9 @@ export function PayBadge({ status }: { status: string }) {
     partial: "border-amber-500/40 text-amber-400 bg-amber-500/10",
     refunded: "border-muted-foreground/40 text-muted-foreground bg-muted/30",
   };
-  return <Badge variant="outline" className={cn("capitalize", map[status])}>{status}</Badge>;
+  return (
+    <Badge variant="outline" className={cn("capitalize", map[status])}>
+      {status}
+    </Badge>
+  );
 }

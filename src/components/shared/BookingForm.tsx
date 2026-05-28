@@ -2,12 +2,24 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -58,9 +70,13 @@ export function BookingForm({ open, onOpenChange, initial, defaultCustomerId, on
 
   useEffect(() => {
     if (!open) return;
-    supabase.from("customers").select("id, full_name").order("full_name").then(({ data }) => {
-      setCustomers(data ?? []);
-    });
+    supabase
+      .from("customers")
+      .select("id, full_name")
+      .order("full_name")
+      .then(({ data }) => {
+        setCustomers(data ?? []);
+      });
     if (initial) {
       setForm({
         customer_id: initial.customer_id,
@@ -133,52 +149,124 @@ export function BookingForm({ open, onOpenChange, initial, defaultCustomerId, on
         </DialogHeader>
         <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
           <Field label="Customer *" className="sm:col-span-2">
-            <Select value={form.customer_id} onValueChange={(v) => setForm({ ...form, customer_id: v })}>
-              <SelectTrigger><SelectValue placeholder="Select a customer" /></SelectTrigger>
+            <Select
+              value={form.customer_id}
+              onValueChange={(v) => setForm({ ...form, customer_id: v })}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a customer" />
+              </SelectTrigger>
               <SelectContent>
-                {customers.map((c) => <SelectItem key={c.id} value={c.id}>{c.full_name}</SelectItem>)}
+                {customers.map((c) => (
+                  <SelectItem key={c.id} value={c.id}>
+                    {c.full_name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </Field>
           <Field label="Pickup Location *">
-            <Input value={form.pickup_location} onChange={(e) => setForm({ ...form, pickup_location: e.target.value })} required />
+            <Input
+              value={form.pickup_location}
+              onChange={(e) => setForm({ ...form, pickup_location: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Dropoff Location *">
-            <Input value={form.dropoff_location} onChange={(e) => setForm({ ...form, dropoff_location: e.target.value })} required />
+            <Input
+              value={form.dropoff_location}
+              onChange={(e) => setForm({ ...form, dropoff_location: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Booking Date *">
-            <Input type="date" value={form.booking_date} onChange={(e) => setForm({ ...form, booking_date: e.target.value })} required />
+            <Input
+              type="date"
+              value={form.booking_date}
+              onChange={(e) => setForm({ ...form, booking_date: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Booking Time *">
-            <Input type="time" value={form.booking_time} onChange={(e) => setForm({ ...form, booking_time: e.target.value })} required />
+            <Input
+              type="time"
+              value={form.booking_time}
+              onChange={(e) => setForm({ ...form, booking_time: e.target.value })}
+              required
+            />
           </Field>
           <Field label="Chauffeur Assigned">
-            <Input value={form.chauffeur_assigned} onChange={(e) => setForm({ ...form, chauffeur_assigned: e.target.value })} />
+            <Input
+              value={form.chauffeur_assigned}
+              onChange={(e) => setForm({ ...form, chauffeur_assigned: e.target.value })}
+            />
           </Field>
           <Field label="Vehicle">
-            <Input value={form.vehicle} onChange={(e) => setForm({ ...form, vehicle: e.target.value })} placeholder="Mercedes S-Class" />
+            <Input
+              value={form.vehicle}
+              onChange={(e) => setForm({ ...form, vehicle: e.target.value })}
+              placeholder="Mercedes S-Class"
+            />
           </Field>
           <Field label="Ride Status">
-            <Select value={form.ride_status} onValueChange={(v) => setForm({ ...form, ride_status: v as Ride })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{RIDE.map((s) => <SelectItem key={s} value={s} className="capitalize">{s}</SelectItem>)}</SelectContent>
+            <Select
+              value={form.ride_status}
+              onValueChange={(v) => setForm({ ...form, ride_status: v as Ride })}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {RIDE.map((s) => (
+                  <SelectItem key={s} value={s} className="capitalize">
+                    {s}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
           </Field>
           <Field label="Payment Status">
-            <Select value={form.payment_status} onValueChange={(v) => setForm({ ...form, payment_status: v as Pay })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{PAY.map((s) => <SelectItem key={s} value={s} className="capitalize">{s}</SelectItem>)}</SelectContent>
+            <Select
+              value={form.payment_status}
+              onValueChange={(v) => setForm({ ...form, payment_status: v as Pay })}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {PAY.map((s) => (
+                  <SelectItem key={s} value={s} className="capitalize">
+                    {s}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
           </Field>
           <Field label="Amount (USD)">
-            <Input type="number" step="0.01" min="0" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
+            <Input
+              type="number"
+              step="0.01"
+              min="0"
+              value={form.amount}
+              onChange={(e) => setForm({ ...form, amount: e.target.value })}
+            />
           </Field>
           <Field label="Notes" className="sm:col-span-2">
-            <Textarea rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
+            <Textarea
+              rows={3}
+              value={form.notes}
+              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            />
           </Field>
           <DialogFooter className="sm:col-span-2 gap-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button type="submit" disabled={busy} className="gradient-gold text-primary-foreground border-0">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={busy}
+              className="gradient-gold text-primary-foreground border-0"
+            >
               {busy && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
               {initial ? "Save changes" : "Create booking"}
             </Button>
@@ -189,7 +277,15 @@ export function BookingForm({ open, onOpenChange, initial, defaultCustomerId, on
   );
 }
 
-function Field({ label, children, className }: { label: string; children: React.ReactNode; className?: string }) {
+function Field({
+  label,
+  children,
+  className,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div className={"space-y-2 " + (className ?? "")}>
       <Label className="text-xs uppercase tracking-wider text-muted-foreground">{label}</Label>

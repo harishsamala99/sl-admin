@@ -10,8 +10,14 @@ import { CustomerForm } from "@/components/shared/CustomerForm";
 import { downloadCsv, exportPdf } from "@/lib/csv";
 import { formatDate } from "@/lib/utils";
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -35,12 +41,17 @@ function CustomersPage() {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from("customers").select("*").order("created_at", { ascending: false });
+    const { data, error } = await supabase
+      .from("customers")
+      .select("*")
+      .order("created_at", { ascending: false });
     if (error) toast.error(error.message);
     setCustomers(data ?? []);
     setLoading(false);
   };
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -56,7 +67,9 @@ function CustomersPage() {
   const pageRows = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 
-  useEffect(() => { setPage(0); }, [q, tagFilter]);
+  useEffect(() => {
+    setPage(0);
+  }, [q, tagFilter]);
 
   const handleDelete = async () => {
     if (!confirmDel) return;
@@ -68,9 +81,13 @@ function CustomersPage() {
   };
 
   const exportRows = filtered.map((c) => ({
-    Name: c.full_name, Email: c.email ?? "", Phone: c.phone ?? "",
-    Company: c.company_name ?? "", Vehicle: c.preferred_vehicle ?? "",
-    Tags: (c.tags ?? []).join(", "), Created: formatDate(c.created_at),
+    Name: c.full_name,
+    Email: c.email ?? "",
+    Phone: c.phone ?? "",
+    Company: c.company_name ?? "",
+    Vehicle: c.preferred_vehicle ?? "",
+    Tags: (c.tags ?? []).join(", "),
+    Created: formatDate(c.created_at),
   }));
 
   return (
@@ -87,7 +104,13 @@ function CustomersPage() {
           <Button variant="outline" onClick={() => exportPdf("Customers", exportRows)}>
             <FileText className="h-4 w-4 mr-2" /> PDF
           </Button>
-          <Button onClick={() => { setEditing(null); setOpen(true); }} className="gradient-gold text-primary-foreground border-0">
+          <Button
+            onClick={() => {
+              setEditing(null);
+              setOpen(true);
+            }}
+            className="gradient-gold text-primary-foreground border-0"
+          >
             <Plus className="h-4 w-4 mr-2" /> New Customer
           </Button>
         </div>
@@ -114,7 +137,9 @@ function CustomersPage() {
                   ? "bg-gold-soft text-gold border-gold/40"
                   : "border-border text-muted-foreground hover:text-foreground")
               }
-            >{t}</button>
+            >
+              {t}
+            </button>
           ))}
         </div>
       </div>
@@ -133,17 +158,27 @@ function CustomersPage() {
             </thead>
             <tbody>
               {loading && (
-                <tr><td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">Loading…</td></tr>
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
+                    Loading…
+                  </td>
+                </tr>
               )}
               {!loading && pageRows.length === 0 && (
-                <tr><td colSpan={5} className="px-6 py-16 text-center text-muted-foreground">
-                  No customers found. Try a different search or add one.
-                </td></tr>
+                <tr>
+                  <td colSpan={5} className="px-6 py-16 text-center text-muted-foreground">
+                    No customers found. Try a different search or add one.
+                  </td>
+                </tr>
               )}
               {pageRows.map((c) => (
                 <tr key={c.id} className="border-b border-border/50 hover:bg-muted/30">
                   <td className="px-6 py-3">
-                    <Link to="/customers/$id" params={{ id: c.id }} className="font-medium hover:text-gold transition-colors">
+                    <Link
+                      to="/customers/$id"
+                      params={{ id: c.id }}
+                      className="font-medium hover:text-gold transition-colors"
+                    >
                       {c.full_name}
                     </Link>
                   </td>
@@ -155,12 +190,25 @@ function CustomersPage() {
                   <td className="px-6 py-3">
                     <div className="flex gap-1 flex-wrap">
                       {(c.tags ?? []).map((t) => (
-                        <Badge key={t} variant="outline" className="bg-gold-soft text-gold border-gold/40">{t}</Badge>
+                        <Badge
+                          key={t}
+                          variant="outline"
+                          className="bg-gold-soft text-gold border-gold/40"
+                        >
+                          {t}
+                        </Badge>
                       ))}
                     </div>
                   </td>
                   <td className="px-6 py-3 text-right">
-                    <Button variant="ghost" size="icon" onClick={() => { setEditing(c); setOpen(true); }}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        setEditing(c);
+                        setOpen(true);
+                      }}
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => setConfirmDel(c)}>
@@ -173,11 +221,29 @@ function CustomersPage() {
           </table>
         </div>
         <div className="flex items-center justify-between px-6 py-3 border-t border-border text-sm text-muted-foreground">
-          <div>{filtered.length} customer{filtered.length === 1 ? "" : "s"}</div>
+          <div>
+            {filtered.length} customer{filtered.length === 1 ? "" : "s"}
+          </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" disabled={page === 0} onClick={() => setPage((p) => p - 1)}>Prev</Button>
-            <span>Page {page + 1} / {pageCount}</span>
-            <Button variant="outline" size="sm" disabled={page >= pageCount - 1} onClick={() => setPage((p) => p + 1)}>Next</Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page === 0}
+              onClick={() => setPage((p) => p - 1)}
+            >
+              Prev
+            </Button>
+            <span>
+              Page {page + 1} / {pageCount}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page >= pageCount - 1}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              Next
+            </Button>
           </div>
         </div>
       </div>
@@ -189,12 +255,18 @@ function CustomersPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete customer?</AlertDialogTitle>
             <AlertDialogDescription>
-              This permanently removes <b>{confirmDel?.full_name}</b> and all their bookings &amp; notes.
+              This permanently removes <b>{confirmDel?.full_name}</b> and all their bookings &amp;
+              notes.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">Delete</AlertDialogAction>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground"
+            >
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

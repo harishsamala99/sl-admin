@@ -10,10 +10,7 @@ export function downloadCsv(filename: string, rows: Record<string, unknown>[]) {
     const s = String(v).replace(/"/g, '""');
     return /[",\n]/.test(s) ? `"${s}"` : s;
   };
-  const lines = [
-    headers.join(","),
-    ...rows.map((r) => headers.map((h) => escape(r[h])).join(",")),
-  ];
+  const lines = [headers.join(","), ...rows.map((r) => headers.map((h) => escape(r[h])).join(","))];
   const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
   triggerDownload(blob, filename);
 }
@@ -45,10 +42,7 @@ export function exportPdf(title: string, rows: Record<string, unknown>[]) {
     <h1>${title}</h1>
     <table><thead><tr>${headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead>
     <tbody>${rows
-      .map(
-        (r) =>
-          `<tr>${headers.map((h) => `<td>${r[h] ?? ""}</td>`).join("")}</tr>`,
-      )
+      .map((r) => `<tr>${headers.map((h) => `<td>${r[h] ?? ""}</td>`).join("")}</tr>`)
       .join("")}</tbody></table>
     <script>window.onload=()=>window.print()</script>
     </body></html>`);

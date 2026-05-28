@@ -32,7 +32,9 @@ function MobileCalendarPage() {
     const fmt = (d: Date) => d.toISOString().slice(0, 10);
     supabase
       .from("bookings")
-      .select("id, booking_date, booking_time, pickup_location, dropoff_location, ride_status, customers(full_name)")
+      .select(
+        "id, booking_date, booking_time, pickup_location, dropoff_location, ride_status, customers(full_name)",
+      )
       .gte("booking_date", fmt(start))
       .lte("booking_date", fmt(end))
       .order("booking_time")
@@ -59,14 +61,24 @@ function MobileCalendarPage() {
       </header>
 
       <div className="bg-card border border-border/50 rounded-xl p-3 shadow-sm flex items-center justify-between">
-        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
+        >
           <ChevronLeft className="h-5 w-5" />
         </Button>
         <div className="font-display font-semibold text-lg flex items-center gap-2">
           <CalendarIcon className="w-4 h-4 text-gold" />
           {monthLabel}
         </div>
-        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}
+        >
           <ChevronRight className="h-5 w-5" />
         </Button>
       </div>
@@ -79,25 +91,42 @@ function MobileCalendarPage() {
         ) : (
           Array.from(byDate.entries()).map(([dateStr, dayBookings]) => {
             const dateObj = new Date(dateStr + "T00:00:00");
-            const dayName = dateObj.toLocaleDateString(undefined, { weekday: 'short' });
+            const dayName = dateObj.toLocaleDateString(undefined, { weekday: "short" });
             const dayNum = dateObj.getDate();
             const isToday = dateStr === new Date().toISOString().slice(0, 10);
 
             return (
               <div key={dateStr} className="space-y-3">
                 <div className="flex items-baseline gap-2 sticky top-14 bg-background/95 py-2 backdrop-blur z-10 border-b border-border/40">
-                  <span className={`text-xl font-bold ${isToday ? 'text-gold' : ''}`}>{dayNum}</span>
-                  <span className={`text-sm font-medium ${isToday ? 'text-gold/80' : 'text-muted-foreground uppercase tracking-wider'}`}>{dayName}</span>
-                  {isToday && <span className="ml-2 text-[10px] bg-gold/20 text-gold px-2 py-0.5 rounded-full uppercase font-bold tracking-widest">Today</span>}
+                  <span className={`text-xl font-bold ${isToday ? "text-gold" : ""}`}>
+                    {dayNum}
+                  </span>
+                  <span
+                    className={`text-sm font-medium ${isToday ? "text-gold/80" : "text-muted-foreground uppercase tracking-wider"}`}
+                  >
+                    {dayName}
+                  </span>
+                  {isToday && (
+                    <span className="ml-2 text-[10px] bg-gold/20 text-gold px-2 py-0.5 rounded-full uppercase font-bold tracking-widest">
+                      Today
+                    </span>
+                  )}
                 </div>
 
                 <div className="space-y-3">
                   {dayBookings.map((b) => (
-                    <div key={b.id} className="bg-card border border-border/50 p-3.5 rounded-xl shadow-sm space-y-2">
+                    <div
+                      key={b.id}
+                      className="bg-card border border-border/50 p-3.5 rounded-xl shadow-sm space-y-2"
+                    >
                       <div className="flex justify-between items-start">
                         <div>
-                          <div className="text-sm font-bold text-gold">{b.booking_time?.slice(0, 5)}</div>
-                          <div className="font-semibold text-base mt-0.5">{b.customers?.full_name ?? "Unknown"}</div>
+                          <div className="text-sm font-bold text-gold">
+                            {b.booking_time?.slice(0, 5)}
+                          </div>
+                          <div className="font-semibold text-base mt-0.5">
+                            {b.customers?.full_name ?? "Unknown"}
+                          </div>
                         </div>
                         <RideBadge status={b.ride_status} />
                       </div>

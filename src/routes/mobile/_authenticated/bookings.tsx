@@ -1,6 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Plus, Search, Pencil, Trash2, Calendar as CalendarIcon, MapPin, MoreVertical } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Pencil,
+  Trash2,
+  Calendar as CalendarIcon,
+  MapPin,
+  MoreVertical,
+} from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
@@ -9,8 +17,14 @@ import { BookingForm } from "@/components/shared/BookingForm";
 import { RideBadge, PayBadge } from "@/components/shared/StatusBadges";
 import { formatDate } from "@/lib/utils";
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -38,22 +52,29 @@ function MobileBookingsPage() {
     if (error) toast.error(error.message);
     setRows((data as BookingRow[]) ?? []);
   };
-  
-  useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    load();
+  }, []);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     if (!needle) return rows;
     return rows.filter((b) => {
-      return [b.customers?.full_name, b.pickup_location, b.dropoff_location, b.chauffeur_assigned]
-        .some((v) => (v ?? "").toString().toLowerCase().includes(needle));
+      return [
+        b.customers?.full_name,
+        b.pickup_location,
+        b.dropoff_location,
+        b.chauffeur_assigned,
+      ].some((v) => (v ?? "").toString().toLowerCase().includes(needle));
     });
   }, [rows, q]);
 
   const del = async () => {
     if (!confirmDel) return;
     const { error } = await supabase.from("bookings").delete().eq("id", confirmDel.id);
-    if (error) toast.error(error.message); else toast.success("Booking deleted");
+    if (error) toast.error(error.message);
+    else toast.success("Booking deleted");
     setConfirmDel(null);
     load();
   };
@@ -64,18 +85,25 @@ function MobileBookingsPage() {
         <div>
           <h1 className="text-2xl font-display font-semibold">Bookings</h1>
         </div>
-        <Button size="icon" className="h-10 w-10 rounded-full gradient-gold" onClick={() => { setEditing(null); setOpen(true); }}>
+        <Button
+          size="icon"
+          className="h-10 w-10 rounded-full gradient-gold"
+          onClick={() => {
+            setEditing(null);
+            setOpen(true);
+          }}
+        >
           <Plus className="h-5 w-5 text-primary-foreground" />
         </Button>
       </header>
 
       <div className="relative">
         <Search className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <Input 
-          value={q} 
-          onChange={(e) => setQ(e.target.value)} 
-          placeholder="Search bookings…" 
-          className="pl-10 h-12 bg-card border-border/50 rounded-xl" 
+        <Input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search bookings…"
+          className="pl-10 h-12 bg-card border-border/50 rounded-xl"
         />
       </div>
 
@@ -86,18 +114,23 @@ function MobileBookingsPage() {
           </div>
         ) : (
           filtered.map((b) => (
-            <div key={b.id} className="bg-card border border-border/50 p-4 rounded-xl shadow-sm space-y-3">
+            <div
+              key={b.id}
+              className="bg-card border border-border/50 p-4 rounded-xl shadow-sm space-y-3"
+            >
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="font-semibold text-base">{b.customers?.full_name ?? "Unknown Customer"}</div>
+                  <div className="font-semibold text-base">
+                    {b.customers?.full_name ?? "Unknown Customer"}
+                  </div>
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-1">
                     <CalendarIcon className="w-3.5 h-3.5" />
-                    <span>{formatDate(b.booking_date)} at {b.booking_time?.slice(0,5)}</span>
+                    <span>
+                      {formatDate(b.booking_date)} at {b.booking_time?.slice(0, 5)}
+                    </span>
                   </div>
                 </div>
-                <div className="font-bold text-base text-right">
-                  ${Number(b.amount).toFixed(2)}
-                </div>
+                <div className="font-bold text-base text-right">${Number(b.amount).toFixed(2)}</div>
               </div>
 
               <div className="flex flex-col gap-1.5 bg-muted/30 p-2.5 rounded-lg text-sm">
@@ -118,10 +151,23 @@ function MobileBookingsPage() {
                   <PayBadge status={b.payment_status} />
                 </div>
                 <div className="flex items-center gap-1">
-                  <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full" onClick={() => { setEditing(b); setOpen(true); }}>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 rounded-full"
+                    onClick={() => {
+                      setEditing(b);
+                      setOpen(true);
+                    }}
+                  >
                     <Pencil className="h-4 w-4" />
                   </Button>
-                  <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full text-destructive" onClick={() => setConfirmDel(b)}>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 rounded-full text-destructive"
+                    onClick={() => setConfirmDel(b)}
+                  >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -132,7 +178,7 @@ function MobileBookingsPage() {
       </div>
 
       <BookingForm open={open} onOpenChange={setOpen} initial={editing} onSaved={load} />
-      
+
       <AlertDialog open={!!confirmDel} onOpenChange={(o) => !o && setConfirmDel(null)}>
         <AlertDialogContent className="w-[90vw] max-w-[400px] rounded-xl">
           <AlertDialogHeader>
@@ -141,7 +187,12 @@ function MobileBookingsPage() {
           </AlertDialogHeader>
           <AlertDialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
             <AlertDialogCancel className="w-full mt-0">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={del} className="bg-destructive text-destructive-foreground w-full">Delete</AlertDialogAction>
+            <AlertDialogAction
+              onClick={del}
+              className="bg-destructive text-destructive-foreground w-full"
+            >
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

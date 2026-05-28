@@ -13,9 +13,9 @@ export const Route = createFileRoute("/mobile/_authenticated")({
 
 function MobileAuthLayout() {
   useAuth();
-  
+
   // We extract a page title if possible from child routes or set a default
-  // For this simple version, we'll let each page render its own specific things 
+  // For this simple version, we'll let each page render its own specific things
   // or use the MobileLayout wrapper.
   return (
     <MobileLayout>
