@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Plus, Search, Pencil, Trash2, Phone, Mail, Building } from "lucide-react";
 import { toast } from "sonner";
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/mobile/_authenticated/customers/")({
 function MobileCustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [q, setQ] = useState("");
+  const navigate = useNavigate();
   const [tagFilter, setTagFilter] = useState<string>("all");
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Customer | null>(null);
@@ -127,24 +128,21 @@ function MobileCustomersPage() {
         {filtered.map((c) => (
           <div
             key={c.id}
-            className="bg-card border border-border/50 p-4 rounded-xl shadow-sm space-y-3"
+            onClick={() => navigate({ to: "/mobile/customers/$id", params: { id: c.id } })}
+            className="luxury-card border border-gold/35 p-5 rounded-2xl shadow-[0_0_15px_rgba(200,168,0,0.02)] space-y-3 cursor-pointer hover:border-gold/60 transition-all duration-300"
           >
             <div className="flex justify-between items-start">
               <div>
-                <Link
-                  to="/mobile/customers/$id"
-                  params={{ id: c.id }}
-                  className="font-semibold text-lg hover:text-gold transition-colors"
-                >
+                <span className="font-semibold text-lg hover:text-gold transition-colors text-foreground">
                   {c.full_name}
-                </Link>
+                </span>
                 {c.tags && c.tags.length > 0 && (
                   <div className="flex gap-1.5 flex-wrap mt-1.5">
                     {c.tags.map((t) => (
                       <Badge
                         key={t}
                         variant="outline"
-                        className="bg-gold-soft text-gold border-gold/40 text-[10px] py-0"
+                        className="bg-gold-soft text-gold border-gold/40 text-[10px] py-0 font-semibold"
                       >
                         {t}
                       </Badge>
@@ -157,38 +155,35 @@ function MobileCustomersPage() {
             <div className="space-y-1.5 text-sm">
               {c.phone && (
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Phone className="w-4 h-4 text-primary shrink-0" />
-                  <span>{c.phone}</span>
+                  <Phone className="w-4 h-4 text-gold shrink-0" />
+                  <span className="text-foreground/90">{c.phone}</span>
                 </div>
               )}
               {c.email && (
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Mail className="w-4 h-4 text-primary shrink-0" />
-                  <span className="truncate">{c.email}</span>
+                  <Mail className="w-4 h-4 text-gold shrink-0" />
+                  <span className="truncate text-foreground/90">{c.email}</span>
                 </div>
               )}
               {c.company_name && (
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Building className="w-4 h-4 text-primary shrink-0" />
-                  <span className="truncate">{c.company_name}</span>
+                  <Building className="w-4 h-4 text-gold shrink-0" />
+                  <span className="truncate text-foreground/90">{c.company_name}</span>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center justify-between pt-2 border-t border-border/40 mt-3">
-              <Link
-                to="/mobile/customers/$id"
-                params={{ id: c.id }}
-                className="text-sm text-gold font-medium"
-              >
+            <div className="flex items-center justify-between pt-2 border-t border-border/20 mt-3">
+              <span className="text-sm text-gold font-semibold">
                 View details
-              </Link>
+              </span>
               <div className="flex items-center gap-1">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 rounded-full"
-                  onClick={() => {
+                  className="h-8 w-8 rounded-full hover:bg-sidebar-accent/50 text-muted-foreground hover:text-gold"
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setEditing(c);
                     setOpen(true);
                   }}
@@ -198,8 +193,11 @@ function MobileCustomersPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 rounded-full text-destructive"
-                  onClick={() => setConfirmDel(c)}
+                  className="h-8 w-8 rounded-full text-rose-400 hover:text-rose-300 hover:bg-rose-500/10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setConfirmDel(c);
+                  }}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

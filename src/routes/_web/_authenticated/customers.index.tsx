@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Plus, Search, FileDown, FileText, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -63,6 +63,8 @@ function CustomersPage() {
       );
     });
   }, [customers, q, tagFilter]);
+
+  const navigate = useNavigate();
 
   const pageRows = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -158,18 +160,15 @@ function CustomersPage() {
           {pageRows.map((c) => (
             <div
               key={c.id}
-              className="luxury-card rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:translate-y-[-4px]"
+              onClick={() => navigate({ to: "/customers/$id", params: { id: c.id } })}
+              className="luxury-card rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:translate-y-[-4px] border border-gold/35 hover:border-gold/70 shadow-[0_0_15px_rgba(200,168,0,0.02)] hover:shadow-[0_0_20px_rgba(200,168,0,0.08)] cursor-pointer transition-all duration-300"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <Link
-                      to="/customers/$id"
-                      params={{ id: c.id }}
-                      className="font-display text-lg font-semibold text-foreground hover:text-gold transition-colors block truncate"
-                    >
+                    <span className="font-display text-lg font-semibold text-foreground hover:text-gold transition-colors block truncate">
                       {c.full_name}
-                    </Link>
+                    </span>
                     <span className="text-[10px] font-semibold text-gold tracking-wider uppercase block mt-0.5 opacity-80">
                       {c.company_name || "Personal Client"}
                     </span>
@@ -199,19 +198,16 @@ function CustomersPage() {
               </div>
 
               <div className="flex items-center justify-between border-t border-border/20 pt-4 mt-auto">
-                <Link
-                  to="/customers/$id"
-                  params={{ id: c.id }}
-                  className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-white transition-all"
-                >
+                <span className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-white transition-all">
                   View Profile →
-                </Link>
+                </span>
                 <div className="flex gap-1">
                   <Button
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 text-muted-foreground hover:text-gold hover:bg-sidebar-accent/50 rounded-lg"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setEditing(c);
                       setOpen(true);
                     }}
@@ -222,7 +218,10 @@ function CustomersPage() {
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 text-muted-foreground hover:text-rose-400 hover:bg-rose-500/10 rounded-lg"
-                    onClick={() => setConfirmDel(c)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setConfirmDel(c);
+                    }}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
