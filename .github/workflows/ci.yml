@@ -26,3 +26,6 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Auto format
+        run: npx prettier --write .
