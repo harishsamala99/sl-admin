@@ -96,8 +96,12 @@ function CustomersPage() {
     <div className="p-4 md:p-10 space-y-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-gold font-semibold mb-1">Clients</div>
-          <h1 className="text-3xl md:text-4xl font-display font-medium text-foreground">Customers</h1>
+          <div className="text-xs uppercase tracking-[0.3em] text-gold font-semibold mb-1">
+            Clients
+          </div>
+          <h1 className="text-3xl md:text-4xl font-display font-medium text-foreground">
+            Customers
+          </h1>
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button variant="outline" onClick={() => downloadCsv("customers.csv", exportRows)}>

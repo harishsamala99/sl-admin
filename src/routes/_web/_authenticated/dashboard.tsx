@@ -85,7 +85,10 @@ function Dashboard() {
             <Crown className="h-3 w-3 animate-pulse" /> Admin Console
           </div>
           <h1 className="text-4xl md:text-5xl font-display font-light tracking-tight text-white/90">
-            {getGreeting()}, <span className="gradient-gold-text font-semibold tracking-normal drop-shadow-[0_2px_15px_rgba(212,175,55,0.2)]">welcome back</span>
+            {getGreeting()},{" "}
+            <span className="gradient-gold-text font-semibold tracking-normal drop-shadow-[0_2px_15px_rgba(212,175,55,0.2)]">
+              welcome back
+            </span>
           </h1>
           <p className="text-xs text-muted-foreground mt-2 tracking-wide font-medium">
             Monitoring your fleet and luxury reservations in real-time.

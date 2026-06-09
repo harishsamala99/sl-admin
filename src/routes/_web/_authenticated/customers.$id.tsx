@@ -204,8 +204,12 @@ function CustomerDetail() {
       <div className="luxury-card rounded-xl p-6 md:p-8">
         <div className="flex flex-wrap gap-6 items-start justify-between">
           <div className="space-y-3 min-w-0">
-            <div className="text-xs uppercase tracking-[0.3em] text-gold font-semibold">Client Profile</div>
-            <h1 className="text-3xl md:text-4xl font-display font-medium text-foreground">{customer.full_name}</h1>
+            <div className="text-xs uppercase tracking-[0.3em] text-gold font-semibold">
+              Client Profile
+            </div>
+            <h1 className="text-3xl md:text-4xl font-display font-medium text-foreground">
+              {customer.full_name}
+            </h1>
             <div className="flex gap-2 flex-wrap items-center">
               <Badge
                 variant="outline"
@@ -456,7 +460,10 @@ function CustomerDetail() {
                 placeholder="Add a note about this customer…"
                 rows={2}
               />
-              <Button onClick={addNote} className="gradient-gold text-primary-foreground border-0 shadow-sm">
+              <Button
+                onClick={addNote}
+                className="gradient-gold text-primary-foreground border-0 shadow-sm"
+              >
                 Add
               </Button>
             </div>

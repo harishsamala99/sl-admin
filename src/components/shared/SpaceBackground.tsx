@@ -55,13 +55,14 @@ export default function SpaceBackground() {
       stars.forEach((s) => {
         s.twinkle += s.speed;
         const currentAlpha = Math.max(0.15, s.alpha * ((Math.sin(s.twinkle) + 1) / 2));
-        
+
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
         // brighter stars are pure white/gold
-        ctx.fillStyle = s.size > 1.3 
-          ? `rgba(255, 235, 175, ${currentAlpha * 0.95})` 
-          : `rgba(220, 190, 110, ${currentAlpha * 0.75})`;
+        ctx.fillStyle =
+          s.size > 1.3
+            ? `rgba(255, 235, 175, ${currentAlpha * 0.95})`
+            : `rgba(220, 190, 110, ${currentAlpha * 0.75})`;
         ctx.fill();
 
         // draw premium cross-flare sparkles for the brightest stars
@@ -73,7 +74,7 @@ export default function SpaceBackground() {
           // vertical flare
           ctx.moveTo(s.x, s.y - s.size * 3.5);
           ctx.lineTo(s.x, s.y + s.size * 3.5);
-          
+
           ctx.strokeStyle = `rgba(255, 240, 200, ${currentAlpha * 0.55})`;
           ctx.lineWidth = 0.6;
           ctx.stroke();

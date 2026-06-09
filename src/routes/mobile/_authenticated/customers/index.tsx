@@ -174,9 +174,7 @@ function MobileCustomersPage() {
             </div>
 
             <div className="flex items-center justify-between pt-2 border-t border-border/20 mt-3">
-              <span className="text-sm text-gold font-semibold">
-                View details
-              </span>
+              <span className="text-sm text-gold font-semibold">View details</span>
               <div className="flex items-center gap-1">
                 <Button
                   variant="ghost"
