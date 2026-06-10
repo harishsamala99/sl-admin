@@ -70,7 +70,11 @@ export function AppSidebar() {
           title="Switch Theme"
         >
           <span className="flex items-center gap-2">
-            {theme === "dark" ? <Sun className="h-4 w-4 text-gold" /> : <Moon className="h-4 w-4 text-gold" />}
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4 text-gold" />
+            ) : (
+              <Moon className="h-4 w-4 text-gold" />
+            )}
             {theme === "dark" ? "Light Mode" : "Dark Mode"}
           </span>
           <span className="text-[8px] tracking-widest text-gold bg-gold-soft px-2 py-0.5 rounded-md border border-gold/20 font-bold">
@@ -102,7 +106,11 @@ export function MobileTopBar() {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-sidebar-border/40 bg-sidebar-accent/30 text-[9px] uppercase tracking-wider font-semibold text-sidebar-foreground/80 hover:text-sidebar-foreground transition-all duration-300"
             title="Switch Theme"
           >
-            {theme === "dark" ? <Sun className="h-3.5 w-3.5 text-gold" /> : <Moon className="h-3.5 w-3.5 text-gold" />}
+            {theme === "dark" ? (
+              <Sun className="h-3.5 w-3.5 text-gold" />
+            ) : (
+              <Moon className="h-3.5 w-3.5 text-gold" />
+            )}
             <span>{theme === "dark" ? "Light" : "Dark"}</span>
           </button>
           <span className="text-[8px] uppercase tracking-[0.2em] px-2.5 py-1.5 rounded-xl border border-gold/30 bg-gold-soft text-gold font-bold">

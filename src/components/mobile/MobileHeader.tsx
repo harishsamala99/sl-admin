@@ -21,7 +21,11 @@ export function MobileHeader({ title }: { title?: string }) {
             className="p-1.5 rounded-lg border border-border bg-card/50 text-foreground/75 transition-all duration-300"
             title="Toggle Theme"
           >
-            {theme === "dark" ? <Sun className="h-3.5 w-3.5 text-gold" /> : <Moon className="h-3.5 w-3.5 text-gold" />}
+            {theme === "dark" ? (
+              <Sun className="h-3.5 w-3.5 text-gold" />
+            ) : (
+              <Moon className="h-3.5 w-3.5 text-gold" />
+            )}
           </button>
           {user && (
             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-medium text-primary">
