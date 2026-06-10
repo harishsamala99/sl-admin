@@ -1,6 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { AppSidebar, MobileTopBar } from "@/components/web/AppSidebar";
-import bgVideo from "@/assets/bg.mp4?url";
 import SpaceBackground from "@/components/shared/SpaceBackground";
 
 export const Route = createFileRoute("/_web/_authenticated")({
@@ -17,14 +16,6 @@ function AuthLayout() {
       <div className="glow-orb top-[-100px] left-[-100px] opacity-70 animate-pulse duration-[8000ms] pointer-events-none" />
       <div className="glow-orb bottom-[-200px] right-[-100px] opacity-40 animate-pulse duration-[12000ms] pointer-events-none" />
 
-      <video
-        className="fixed inset-0 w-full h-full object-cover -z-10 opacity-[0.18] pointer-events-none select-none filter brightness-[0.7]"
-        src={bgVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
       <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background/90 via-background/80 to-background/95 pointer-events-none select-none" />
       <AppSidebar />
       <div className="flex-1 flex flex-col min-w-0 z-10">
