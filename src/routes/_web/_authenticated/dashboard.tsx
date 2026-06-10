@@ -84,7 +84,7 @@ function Dashboard() {
           <div className="text-[10px] uppercase tracking-[0.4em] text-gold mb-2.5 flex items-center gap-2 font-semibold">
             <Crown className="h-3 w-3 animate-pulse" /> Admin Console
           </div>
-          <h1 className="text-4xl md:text-5xl font-display font-light tracking-tight text-white/90">
+          <h1 className="text-4xl md:text-5xl font-display font-light tracking-tight text-foreground/90">
             {getGreeting()},{" "}
             <span className="gradient-gold-text font-semibold tracking-normal drop-shadow-[0_2px_15px_rgba(212,175,55,0.2)]">
               welcome back
@@ -124,7 +124,7 @@ function Dashboard() {
           </div>
           <Link
             to="/bookings"
-            className="text-xs uppercase tracking-widest text-gold hover:text-white font-semibold transition-colors duration-300 border border-gold/30 rounded-full px-4 py-1.5 bg-gold-soft hover:bg-gold/20"
+            className="text-xs uppercase tracking-widest text-gold hover:text-foreground font-semibold transition-colors duration-300 border border-gold/30 rounded-full px-4 py-1.5 bg-gold-soft hover:bg-gold/20"
           >
             View all →
           </Link>
@@ -213,7 +213,7 @@ function StatCard({
         </div>
       </div>
       <div className="mt-6 text-3xl font-display font-medium tracking-tight">
-        {value === undefined ? <Skeleton className="h-9 w-28 bg-white/5" /> : value}
+        {value === undefined ? <Skeleton className="h-9 w-28 bg-muted/5" /> : value}
       </div>
     </div>
   );

@@ -202,7 +202,7 @@ function CustomersPage() {
               </div>
 
               <div className="flex items-center justify-between border-t border-border/20 pt-4 mt-auto">
-                <span className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-white transition-all">
+                <span className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-foreground transition-all">
                   View Profile →
                 </span>
                 <div className="flex gap-1">

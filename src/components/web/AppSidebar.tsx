@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Crown, LayoutDashboard, Users, CalendarDays, CarFront } from "lucide-react";
+import { Crown, LayoutDashboard, Users, CalendarDays, CarFront, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/use-theme";
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -13,6 +14,7 @@ export function AppSidebar() {
   const path = useRouterState({ select: (s) => s.location.pathname });
 
   const isActive = (url: string) => path === url || path.startsWith(url + "/");
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <aside className="w-64 shrink-0 hidden md:flex flex-col bg-sidebar/40 backdrop-blur-xl text-sidebar-foreground border-r border-sidebar-border/40 select-none">
@@ -61,8 +63,23 @@ export function AppSidebar() {
         })}
       </nav>
 
-      <div className="p-6 border-t border-sidebar-border/20 text-[9px] uppercase tracking-[0.25em] text-sidebar-foreground/40 font-semibold">
-        Admin Console · v2.0
+      <div className="px-6 py-4 border-t border-sidebar-border/20 flex flex-col gap-3">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/80 border border-sidebar-border/40 bg-sidebar-accent/10 hover:text-sidebar-foreground hover:bg-sidebar-accent/40 transition-all duration-300 shadow-sm"
+          title="Switch Theme"
+        >
+          <span className="flex items-center gap-2">
+            {theme === "dark" ? <Sun className="h-4 w-4 text-gold" /> : <Moon className="h-4 w-4 text-gold" />}
+            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+          </span>
+          <span className="text-[8px] tracking-widest text-gold bg-gold-soft px-2 py-0.5 rounded-md border border-gold/20 font-bold">
+            {theme.toUpperCase()}
+          </span>
+        </button>
+        <div className="text-[9px] uppercase tracking-[0.25em] text-sidebar-foreground/40 font-semibold text-center mt-1">
+          Admin Console · v2.0
+        </div>
       </div>
     </aside>
   );
@@ -70,6 +87,8 @@ export function AppSidebar() {
 
 export function MobileTopBar() {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className="md:hidden bg-sidebar/55 backdrop-blur-xl border-b border-sidebar-border/30">
       <div className="px-4 py-4 flex items-center justify-between">
@@ -77,9 +96,19 @@ export function MobileTopBar() {
           <Crown className="h-5 w-5 text-gold animate-pulse" />
           <span className="font-display font-medium tracking-wide text-sm">Superior Limousine</span>
         </div>
-        <span className="text-[8px] uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-gold/30 bg-gold-soft text-gold font-semibold">
-          Admin
-        </span>
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-sidebar-border/40 bg-sidebar-accent/30 text-[9px] uppercase tracking-wider font-semibold text-sidebar-foreground/80 hover:text-sidebar-foreground transition-all duration-300"
+            title="Switch Theme"
+          >
+            {theme === "dark" ? <Sun className="h-3.5 w-3.5 text-gold" /> : <Moon className="h-3.5 w-3.5 text-gold" />}
+            <span>{theme === "dark" ? "Light" : "Dark"}</span>
+          </button>
+          <span className="text-[8px] uppercase tracking-[0.2em] px-2.5 py-1.5 rounded-xl border border-gold/30 bg-gold-soft text-gold font-bold">
+            Admin
+          </span>
+        </div>
       </div>
       <div className="flex overflow-x-auto px-3 pb-3 gap-2 scrollbar-none">
         {items.map((it) => {

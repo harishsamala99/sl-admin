@@ -293,7 +293,7 @@ function BookingsPage() {
       <AlertDialog open={!!confirmDel} onOpenChange={(o) => !o && setConfirmDel(null)}>
         <AlertDialogContent className="bg-background/95 backdrop-blur-xl border-border/40 max-w-sm rounded-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-display font-medium text-lg text-white">
+            <AlertDialogTitle className="font-display font-medium text-lg text-foreground">
               Delete Booking?
             </AlertDialogTitle>
             <AlertDialogDescription className="text-xs text-muted-foreground/80 mt-2">

@@ -4,6 +4,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import { AuthProvider, useAuth } from "@/lib/auth";
+import { ThemeProvider, useTheme } from "@/hooks/use-theme";
 import SuperiorLimousineLoader from "@/components/loadingpage";
 
 function NotFoundComponent() {
@@ -72,12 +73,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AppContent />
-        <Toaster theme="dark" position="top-right" richColors />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppContent />
+          <ThemeToaster />
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
+}
+
+function ThemeToaster() {
+  const { theme } = useTheme();
+  return <Toaster theme={theme} position="top-right" richColors />;
 }
 
 function AppContent() {

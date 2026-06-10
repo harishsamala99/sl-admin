@@ -104,7 +104,7 @@ function MobileDashboard() {
           </h2>
           <Link
             to="/mobile/bookings"
-            className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-white px-3 py-1 rounded-full border border-gold/30 bg-gold-soft transition-all duration-300"
+            className="text-xs font-semibold uppercase tracking-wider text-gold hover:text-foreground px-3 py-1 rounded-full border border-gold/30 bg-gold-soft transition-all duration-300"
           >
             See all
           </Link>
@@ -123,7 +123,7 @@ function MobileDashboard() {
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="font-display font-medium text-sm tracking-wide text-white">
+                  <div className="font-display font-medium text-sm tracking-wide text-foreground">
                     {b.customers?.full_name ?? "—"}
                   </div>
                   <div className="text-[10px] text-muted-foreground/80 mt-1 font-semibold tracking-wider">
@@ -131,7 +131,7 @@ function MobileDashboard() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-display font-semibold text-sm tracking-wide text-white">
+                  <div className="font-display font-semibold text-sm tracking-wide text-foreground">
                     ${Number(b.amount).toFixed(2)}
                   </div>
                 </div>
@@ -177,8 +177,8 @@ function StatCard({
           {label}
         </div>
       </div>
-      <div className="mt-4 text-xl font-display font-semibold tracking-tight text-white">
-        {value === undefined ? <Skeleton className="h-6 w-14 bg-white/5" /> : value}
+      <div className="mt-4 text-xl font-display font-semibold tracking-tight text-foreground">
+        {value === undefined ? <Skeleton className="h-6 w-14 bg-muted/5" /> : value}
       </div>
     </div>
   );

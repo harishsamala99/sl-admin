@@ -1,8 +1,10 @@
-import { Menu } from "lucide-react";
+import { Menu, Sun, Moon } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { useTheme } from "@/hooks/use-theme";
 
 export function MobileHeader({ title }: { title?: string }) {
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border">
@@ -13,7 +15,14 @@ export function MobileHeader({ title }: { title?: string }) {
             {title || "Superior Limousine LLC"}
           </h1>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded-lg border border-border bg-card/50 text-foreground/75 transition-all duration-300"
+            title="Toggle Theme"
+          >
+            {theme === "dark" ? <Sun className="h-3.5 w-3.5 text-gold" /> : <Moon className="h-3.5 w-3.5 text-gold" />}
+          </button>
           {user && (
             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-medium text-primary">
               {user.email?.charAt(0).toUpperCase() || "U"}
